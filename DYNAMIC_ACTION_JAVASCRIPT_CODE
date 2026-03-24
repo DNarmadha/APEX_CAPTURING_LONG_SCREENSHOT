@@ -1,0 +1,24 @@
+---Add a button to your APEX page where users can click to capture the screenshot.
+Set the Static ID of the button as:
+screenshotBtn
+--- Add JavaScript to Trigger the Screenshot
+---Create a Dynamic Action for the button click event:
+- Event: Click
+- Selection Type: Button
+- Button: screenshotBtn
+- True Action: Execute JavaScript Code
+
+JAVASCRIPT CODE:
+
+document.getElementById("screenshotBtn").addEventListener("click", function () {
+    html2canvas(document.body, {
+        scrollY: -window.scrollY,  // starts from top of the page
+        useCORS: true              // handles cross-origin images
+    }).then(function (canvas) {
+        // Create a download link
+        var link = document.createElement("a");
+        link.download = "screenshot.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    });
+});
